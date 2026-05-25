@@ -8,641 +8,259 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --plum:       #3D1A5E;
-      --violet:     #7B3FA0;
-      --lavender:   #C084E0;
-      --blush:      #F0C4D8;
-      --rose:       #D4537E;
-      --coral:      #E07040;
-      --teal:       #1D9E75;
-      --indigo:     #534AB7;
-      --cream:      #FDF8FF;
-      --text:       #1A0A2E;
-      --muted:      #7A6890;
+      --plum:     #9b59b6;
+      --violet:   #8e44ad;
+      --heading:  #6c3483;
+      --label:    #7d3c98;
+      --lavender: #c39bd3;
+      --blush:    #F0C4D8;
+      --cream:    #FDF8FF;
+      --text:     #1a1a2e;
+      --muted:    #5a5070;
     }
 
     html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      overflow-x: hidden;
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle; line-height: 1;
     }
+
+    /* ── LANG SWITCHER ── */
+    .lang-toggle {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .lang-toggle a {
+      font-size: 13px; font-weight: 500; color: var(--muted);
+      text-decoration: none; padding: 3px 8px; border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .lang-toggle a.active { background: var(--plum); color: #fff !important; }
+    .lang-toggle a:hover:not(.active) { color: var(--violet); }
+    .lang-toggle span { color: var(--lavender); font-size: 12px; }
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 18px 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(253,248,255,0.85);
-      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(253,248,255,0.88); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(192,132,224,0.15);
     }
-
     .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--plum);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600;
+      color: var(--heading); text-decoration: none; display: flex; align-items: center; gap: 8px;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--violet); }
+    .nav-cta { background: var(--plum); color: #fff !important; padding: 9px 20px; border-radius: 100px; font-weight: 500 !important; font-size: 14px; transition: background 0.2s !important; }
+    .nav-cta:hover { background: var(--violet) !important; }
 
-    .nav-cta {
-      background: var(--plum);
-      color: #fff !important;
-      padding: 9px 20px;
-      border-radius: 100px;
-      font-weight: 500 !important;
-      font-size: 14px;
-      transition: background 0.2s !important;
-    }
-
-    .nav-cta:hover { background: var(--violet) !important; color: #fff !important; }
+    /* ── CONTENT SECTIONS ── */
+    [lang="uk"] { display: none; }
+    body.uk [lang="en"] { display: none; }
+    body.uk [lang="uk"] { display: block; }
+    body.uk .lang-toggle a[data-lang="uk"] { background: var(--plum); color: #fff !important; }
+    body.uk .lang-toggle a[data-lang="en"] { background: transparent; color: var(--muted) !important; }
+    /* Inline elements in uk mode */
+    body.uk span[lang="en"] { display: none; }
+    body.uk span[lang="uk"] { display: inline; }
+    span[lang="uk"] { display: none; }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 120px 48px 80px;
-      position: relative;
-      overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 48px;
+      padding: 120px 80px 80px;
+      position: relative; overflow: hidden;
     }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.35;
-    }
-
+    .hero-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; }
     .orb-1 { width: 600px; height: 600px; background: var(--lavender); top: -100px; right: -100px; animation: drift 12s ease-in-out infinite alternate; }
     .orb-2 { width: 400px; height: 400px; background: var(--blush); bottom: -80px; left: -80px; animation: drift 9s ease-in-out infinite alternate-reverse; }
     .orb-3 { width: 300px; height: 300px; background: #B39DDB; top: 40%; left: 40%; animation: drift 15s ease-in-out infinite alternate; }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,-20px) scale(1.05); } }
 
-    @keyframes drift {
-      from { transform: translate(0, 0) scale(1); }
-      to   { transform: translate(30px, -20px) scale(1.05); }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-    }
-
+    .hero-content { position: relative; z-index: 1; }
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(192,132,224,0.15);
-      border: 1px solid rgba(192,132,224,0.4);
-      border-radius: 100px;
-      padding: 6px 14px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--violet);
-      margin-bottom: 28px;
-      animation: fadeUp 0.6s ease both;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(155,89,182,0.1); border: 1px solid rgba(155,89,182,0.35);
+      border-radius: 100px; padding: 6px 14px; font-size: 13px; font-weight: 500;
+      color: var(--heading); margin-bottom: 28px; animation: fadeUp 0.6s ease both;
     }
-
     h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(42px, 6vw, 72px);
-      font-weight: 600;
-      line-height: 1.1;
-      color: var(--plum);
-      margin-bottom: 24px;
-      animation: fadeUp 0.6s ease 0.1s both;
+      font-size: clamp(38px, 5vw, 64px); font-weight: 600; line-height: 1.1;
+      color: var(--heading); margin-bottom: 24px; animation: fadeUp 0.6s ease 0.1s both;
     }
-
-    h1 em {
-      font-style: italic;
-      color: var(--violet);
-    }
-
+    h1 em { font-style: italic; color: var(--plum); }
     .hero-sub {
-      font-size: 18px;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 40px;
-      animation: fadeUp 0.6s ease 0.2s both;
-      max-width: 480px;
+      font-size: 17px; font-weight: 300; color: #4a4060; line-height: 1.7;
+      margin-bottom: 40px; animation: fadeUp 0.6s ease 0.2s both;
     }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      animation: fadeUp 0.6s ease 0.3s both;
-    }
-
+    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.6s ease 0.3s both; }
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--plum);
-      color: #fff;
-      padding: 14px 28px;
-      border-radius: 100px;
-      font-size: 16px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.2s;
-      box-shadow: 0 8px 32px rgba(61,26,94,0.25);
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--plum); color: #fff; padding: 14px 28px;
+      border-radius: 100px; font-size: 16px; font-weight: 500; text-decoration: none;
+      transition: all 0.2s; box-shadow: 0 8px 32px rgba(155,89,182,0.3);
     }
-
-    .btn-primary:hover {
-      background: var(--violet);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(61,26,94,0.3);
-    }
-
-    .btn-secondary {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--muted);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: color 0.2s;
-    }
-
+    .btn-primary:hover { background: var(--violet); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(155,89,182,0.4); }
+    .btn-secondary { font-size: 14px; font-weight: 500; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
     .btn-secondary:hover { color: var(--violet); }
 
-    .hero-note {
-      margin-top: 16px;
-      font-size: 13px;
-      color: var(--muted);
-      animation: fadeUp 0.6s ease 0.4s both;
-    }
-
-    .hero-visual {
-      position: absolute;
-      right: 48px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1;
-      animation: fadeUp 0.8s ease 0.2s both;
-    }
-
-    /* Mock extension popup */
+    .hero-visual { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; animation: fadeUp 0.8s ease 0.2s both; }
     .mock-popup {
-      width: 300px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 32px 80px rgba(61,26,94,0.2), 0 0 0 1px rgba(192,132,224,0.2);
-      overflow: hidden;
+      width: 300px; background: #fff; border-radius: 20px;
+      box-shadow: 0 32px 80px rgba(155,89,182,0.2), 0 0 0 1px rgba(155,89,182,0.15); overflow: hidden;
     }
-
-    .mock-header {
-      background: var(--plum);
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .mock-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .mock-lang {
-      display: flex;
-      gap: 4px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 8px;
-      padding: 3px;
-    }
-
-    .mock-lang span {
-      padding: 2px 8px;
-      border-radius: 5px;
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.6);
-    }
-
-    .mock-lang span.active {
-      background: rgba(255,255,255,0.25);
-      color: #fff;
-    }
-
+    .mock-header { background: var(--plum); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .mock-logo { display: flex; align-items: center; gap: 8px; font-family: 'Playfair Display', serif; font-size: 15px; color: #fff; font-weight: 600; }
+    .mock-lang { display: flex; gap: 4px; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 3px; }
+    .mock-lang span { padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); }
+    .mock-lang span.active { background: rgba(255,255,255,0.25); color: #fff; }
     .mock-body { padding: 18px 20px; }
-
-    .mock-intro {
-      font-size: 12px;
-      color: #888;
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-
+    .mock-intro { font-size: 12px; color: #888; line-height: 1.6; margin-bottom: 16px; }
     .mock-field { margin-bottom: 12px; }
-
-    .mock-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: #aaa;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 4px;
-    }
-
-    .mock-input {
-      background: #f7f7f7;
-      border: 1px solid #e8e8e8;
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 13px;
-      color: #333;
-      width: 100%;
-    }
-
-    .mock-phases {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin: 14px 0;
-    }
-
-    .mock-phase {
-      padding: 4px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .mock-btn {
-      background: var(--plum);
-      color: #fff;
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-    }
+    .mock-label { font-size: 10px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .mock-input { background: #f7f7f7; border: 1px solid #e8e8e8; border-radius: 8px; padding: 8px 10px; font-size: 13px; color: #333; width: 100%; }
+    .mock-phases { display: flex; flex-wrap: wrap; gap: 5px; margin: 14px 0; }
+    .mock-phase { padding: 4px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+    .mock-btn { background: var(--plum); color: #fff; border-radius: 10px; padding: 10px; text-align: center; font-size: 14px; font-weight: 600; }
 
     /* ── PHASES ── */
-    .phases {
-      padding: 100px 48px;
-      background: var(--plum);
-      position: relative;
-      overflow: hidden;
+    .phases { padding: 100px 80px; background: var(--plum); position: relative; overflow: hidden; }
+    .phases::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; border-radius: 50%; background: rgba(255,255,255,0.05); pointer-events: none; }
+    .phases h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); color: #fff; font-weight: 600; margin-bottom: 56px; max-width: 540px; line-height: 1.2; }
+    .phases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; position: relative; z-index: 1; }
+    .phase-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 28px 24px; transition: all 0.3s; }
+    .phase-card:hover { background: rgba(255,255,255,0.13); transform: translateY(-4px); border-color: rgba(255,255,255,0.22); }
+    .phase-icon-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .phase-icon { font-size: 26px; color: #fff; }
+    /* Coloured dot in translucent circle */
+    .phase-dot-circle {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
     }
-
-    .phases::before {
-      content: '';
-      position: absolute;
-      top: -200px; right: -200px;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: rgba(192,132,224,0.1);
-      pointer-events: none;
-    }
-
-    .section-label {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--lavender);
-      margin-bottom: 16px;
-    }
-
-    .phases h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(32px, 4vw, 52px);
-      color: #fff;
-      font-weight: 600;
-      margin-bottom: 56px;
-      max-width: 480px;
-      line-height: 1.2;
-    }
-
-    .phases-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .phase-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 28px 24px;
-      transition: all 0.3s;
-    }
-
-    .phase-card:hover {
-      background: rgba(255,255,255,0.1);
-      transform: translateY(-4px);
-      border-color: rgba(255,255,255,0.2);
-    }
-
-    .phase-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
-
-    .phase-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-
-    .phase-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 6px;
-      vertical-align: middle;
-    }
-
-    .phase-desc {
-      font-size: 14px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-
-    .phase-tips {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .phase-tips li {
-      font-size: 12px;
-      color: rgba(255,255,255,0.45);
-      padding-left: 14px;
-      position: relative;
-    }
-
-    .phase-tips li::before {
-      content: '·';
-      position: absolute;
-      left: 0;
-      color: rgba(255,255,255,0.3);
-    }
+    .phase-dot { width: 12px; height: 12px; border-radius: 50%; display: block; }
+    .phase-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+    .phase-desc { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 16px; }
+    .phase-tips { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .phase-tips li { font-size: 12px; color: rgba(255,255,255,0.55); padding-left: 14px; position: relative; }
+    .phase-tips li::before { content: '·'; position: absolute; left: 0; color: rgba(255,255,255,0.35); }
 
     /* ── HOW IT WORKS ── */
-    .how {
-      padding: 100px 48px;
-      background: var(--cream);
-    }
-
-    .how h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(32px, 4vw, 52px);
-      color: var(--plum);
-      margin-bottom: 60px;
-      line-height: 1.2;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0;
-      position: relative;
-    }
-
-    .steps::before {
-      content: '';
-      position: absolute;
-      top: 28px;
-      left: 10%;
-      right: 10%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--lavender), transparent);
-    }
-
-    .step {
-      text-align: center;
-      padding: 0 24px;
-      position: relative;
-    }
-
+    .how { padding: 100px 80px; background: var(--cream); }
+    .how h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); color: var(--heading); margin-bottom: 60px; line-height: 1.1; white-space: nowrap; }
+    .how h2 em { font-style: italic; color: var(--plum); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
+    .steps::before { content: ''; position: absolute; top: 27px; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, var(--lavender), transparent); }
+    .step { text-align: center; padding: 0 32px; position: relative; }
     .step-num {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: #fff;
-      border: 2px solid var(--lavender);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--violet);
-      margin: 0 auto 20px;
-      position: relative;
-      z-index: 1;
-      box-shadow: 0 4px 16px rgba(192,132,224,0.2);
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #fff; border: 2px solid var(--lavender);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600;
+      color: var(--heading); margin: 0 auto 20px;
+      position: relative; z-index: 1;
+      box-shadow: 0 4px 16px rgba(155,89,182,0.15);
+      line-height: 1;
     }
-
-    .step-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--plum);
-      margin-bottom: 8px;
-    }
-
-    .step-desc {
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .step-title { font-size: 15px; font-weight: 600; color: var(--heading); margin-bottom: 8px; }
+    .step-desc { font-size: 13px; font-weight: 300; color: #4a4060; line-height: 1.6; }
 
     /* ── FEATURES ── */
-    .features {
-      padding: 100px 48px;
-      background: #fff;
-    }
+    .features { padding: 100px 80px; background: #fff; }
+    .features-header { margin-bottom: 56px; }
+    .features h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); color: var(--heading); line-height: 1.2; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .feature-card { padding: 28px; border-radius: 16px; border: 1px solid #f0e8f8; background: var(--cream); transition: all 0.25s; }
+    .feature-card:hover { border-color: var(--lavender); box-shadow: 0 8px 32px rgba(155,89,182,0.1); transform: translateY(-2px); }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; display: flex; align-items: center; color: var(--plum); }
+    .feature-icon .material-symbols-outlined { font-size: 28px; }
+    .feature-title { font-size: 15px; font-weight: 600; color: var(--heading); margin-bottom: 8px; }
+    .feature-desc { font-size: 13px; font-weight: 300; color: #4a4060; line-height: 1.7; }
 
-    .features-header {
-      margin-bottom: 56px;
-    }
-
-    .features h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(32px, 4vw, 52px);
-      color: var(--plum);
-      line-height: 1.2;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-
-    .feature-card {
-      padding: 28px;
-      border-radius: 16px;
-      border: 1px solid #f0e8f8;
-      background: var(--cream);
-      transition: all 0.25s;
-    }
-
-    .feature-card:hover {
-      border-color: var(--lavender);
-      box-shadow: 0 8px 32px rgba(192,132,224,0.12);
-      transform: translateY(-2px);
-    }
-
-    .feature-icon {
-      font-size: 28px;
-      margin-bottom: 14px;
-      display: block;
-    }
-
-    .feature-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--plum);
-      margin-bottom: 8px;
-    }
-
-    .feature-desc {
-      font-size: 13px;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.7;
-    }
+    /* ── CTA BLOCK ── */
+    .cta-block { padding: 80px; background: var(--plum); text-align: center; position: relative; overflow: hidden; }
+    .cta-block::before { content: ''; position: absolute; width: 500px; height: 500px; border-radius: 50%; background: rgba(255,255,255,0.05); top: -200px; left: 50%; transform: translateX(-50%); pointer-events: none; }
+    .cta-block h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 44px); color: #fff; font-weight: 600; margin-bottom: 16px; position: relative; z-index: 1; }
+    .cta-block p { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.75); margin-bottom: 36px; line-height: 1.6; position: relative; z-index: 1; }
+    .cta-block .btn-cta { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: var(--heading); padding: 16px 36px; border-radius: 100px; font-size: 16px; font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: 0 8px 32px rgba(0,0,0,0.15); position: relative; z-index: 1; }
+    .cta-block .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(0,0,0,0.2); }
+    .cta-block .btn-cta .material-symbols-outlined { color: var(--plum); font-size: 22px; }
+    .cta-note { margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.5); position: relative; z-index: 1; }
 
     /* ── DISCLAIMER ── */
-    .disclaimer {
-      padding: 60px 48px;
-      background: #fdf5e8;
-      border-top: 1px solid #f5d97a;
-      border-bottom: 1px solid #f5d97a;
-    }
-
-    .disclaimer-inner {
-      max-width: 720px;
-      margin: 0 auto;
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-
-    .disclaimer-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
-
-    .disclaimer h3 {
-      font-size: 15px;
-      font-weight: 600;
-      color: #7a5c00;
-      margin-bottom: 8px;
-    }
-
-    .disclaimer p {
-      font-size: 13px;
-      color: #9a7a20;
-      line-height: 1.7;
-    }
+    .disclaimer { padding: 60px 80px; background: #fdf5e8; border-top: 1px solid #f5d97a; border-bottom: 1px solid #f5d97a; }
+    .disclaimer-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 20px; align-items: flex-start; }
+    .disclaimer h3 { font-size: 15px; font-weight: 600; color: #7a5c00; margin-bottom: 8px; }
+    .disclaimer p { font-size: 13px; color: #9a7a20; line-height: 1.7; }
 
     /* ── FOOTER ── */
-    footer {
-      background: var(--plum);
-      padding: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 24px;
-    }
-
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-    }
-
-    .footer-links a {
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    footer { background: var(--heading); padding: 48px 80px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: rgba(255,255,255,0.9); }
+    .footer-note { font-size: 12px; color: rgba(255,255,255,0.3); width: 100%; }
 
-    .footer-note {
-      font-size: 12px;
-      color: rgba(255,255,255,0.3);
-      width: 100%;
+    /* ── CALENDAR PREVIEW ── */
+    .cal-preview {
+      padding: 100px 80px;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      align-items: center;
+      gap: 64px;
     }
+    .cal-preview-text h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--heading); font-weight: 600;
+      line-height: 1.15; margin-bottom: 20px;
+    }
+    .cal-preview-text h2 em { font-style: italic; color: var(--plum); }
+    .cal-preview-sub {
+      font-size: 15px; font-weight: 300; color: #4a4060;
+      line-height: 1.75; margin-bottom: 28px;
+    }
+    .cal-phase-legend { display: flex; flex-direction: column; gap: 10px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--heading); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .cal-preview-img {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(155,89,182,0.18), 0 0 0 1px rgba(155,89,182,0.1);
+    }
+    .cal-preview-img img { display: block; width: 100%; height: auto; }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .hero { flex-direction: column; padding: 100px 24px 60px; }
-      .hero-visual { position: static; transform: none; margin-top: 48px; }
-      .mock-popup { width: 100%; max-width: 300px; }
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
+      .hero-content { display: flex; flex-direction: column; align-items: center; }
+      .hero-visual { justify-content: center; margin-top: 40px; }
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
-      .phases, .how, .features, .disclaimer, footer { padding: 72px 24px; }
+      .cal-preview, .how, .features, .disclaimer, .cta-block { padding: 72px 24px; }
+      .cal-preview { grid-template-columns: 1fr; gap: 32px; }
+      footer { padding: 48px 24px; }
+      .steps { grid-template-columns: 1fr; gap: 40px; }
       .steps::before { display: none; }
+      .how h2 { white-space: normal; }
     }
   </style>
 </head>
@@ -651,13 +269,20 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">🌙 Cycle Calendar</a>
-  <ul class="nav-links">
-    <li><a href="#phases">Phases</a></li>
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="privacy-policy.html">Privacy</a></li>
-    <li><a href="#install" class="nav-cta">Add to Chrome</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#phases"><span lang="en">Preview</span><span lang="uk">Перегляд</span></a></li>
+      <li><a href="#how"><span lang="en">How it works</span><span lang="uk">Як це працює</span></a></li>
+      <li><a href="#features"><span lang="en">Features</span><span lang="uk">Функції</span></a></li>
+      <li><a href="https://otomchuk.github.io/ccycle/privacy-policy.html"><span lang="en">Privacy</span><span lang="uk">Конфіденційність</span></a></li>
+      <li><a href="https://chromewebstore.google.com/detail/dobdplimbbnhbgcggafagaanajlaeeek" class="nav-cta"><span lang="en">Add to Chrome</span><span lang="uk">Додати до Chrome</span></a></li>
+    </ul>
+    <div class="lang-toggle">
+      <a href="#" data-lang="en" class="active" onclick="setLang('en');return false;">ENG</a>
+      <span>|</span>
+      <a href="#" data-lang="uk" onclick="setLang('uk');return false;">УКР</a>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -669,17 +294,26 @@
   </div>
 
   <div class="hero-content">
-    <div class="hero-badge">🌙 Free Chrome Extension</div>
-    <h1>Know your cycle,<br><em>own your days</em></h1>
-    <p class="hero-sub">Cycle Calendar creates a beautiful, colour-coded menstrual phase calendar directly in Google Calendar — personalised to your unique rhythm.</p>
+    <div class="hero-badge">
+      <span class="material-symbols-outlined" style="font-size:15px">extension</span>
+      <span lang="en">Free Chrome Extension</span>
+      <span lang="uk">Безкоштовне розширення Chrome</span>
+    </div>
+    <h1 lang="en">Know your cycle,<br><em>own your days</em></h1>
+    <h1 lang="uk">Плануйте життя<br><em>згідно свого ритму</em></h1>
+    <p class="hero-sub" lang="en">Cycle Calendar creates a beautiful, colour-coded menstrual phase calendar directly in Google Calendar — personalised to your unique rhythm.</p>
+    <p class="hero-sub" lang="uk">Cycle Calendar створює кольоровий календар менструальних фаз прямо у Google Calendar — персоналізований під ваш ритм.</p>
     <div class="hero-actions">
       <a href="https://chromewebstore.google.com/detail/dobdplimbbnhbgcggafagaanajlaeeek" class="btn-primary" id="install">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        Add to Chrome — it's free
+        <span class="material-symbols-outlined" style="font-size:18px">add_circle</span>
+        <span lang="en">Add to Chrome — it's free</span>
+        <span lang="uk">Додати до Chrome — безкоштовно</span>
       </a>
-      <a href="#how" class="btn-secondary">See how it works →</a>
+      <a href="#how" class="btn-secondary">
+        <span lang="en">See how it works →</span>
+        <span lang="uk">Як це працює →</span>
+      </a>
     </div>
-    <p class="hero-note">🇬🇧 English &nbsp;·&nbsp; 🇺🇦 Українська &nbsp;·&nbsp; No account needed &nbsp;·&nbsp; Private by design</p>
   </div>
 
   <div class="hero-visual">
@@ -692,107 +326,81 @@
         </div>
       </div>
       <div class="mock-body">
-        <p class="mock-intro">Enter your cycle details once. We'll create a dedicated Google Calendar automatically.</p>
+        <p class="mock-intro" lang="en">Enter your cycle details once. We'll create a dedicated Google Calendar automatically.</p>
+        <p class="mock-intro" lang="uk">Введіть дані циклу один раз. Ми автоматично створимо окремий Google Calendar.</p>
         <div class="mock-field">
-          <div class="mock-label">First day of your last period</div>
+          <div class="mock-label" lang="en">First day of your last period</div>
+          <div class="mock-label" lang="uk">Перший день останньої менструації</div>
           <div class="mock-input">18.05.2026</div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
           <div class="mock-field">
-            <div class="mock-label">Period length</div>
-            <div class="mock-input">5 days</div>
+            <div class="mock-label" lang="en">Period length</div>
+            <div class="mock-label" lang="uk">Тривалість</div>
+            <div class="mock-input" lang="en">5 days</div>
+            <div class="mock-input" lang="uk">5 днів</div>
           </div>
           <div class="mock-field">
-            <div class="mock-label">Cycle length</div>
-            <div class="mock-input">28 days</div>
+            <div class="mock-label" lang="en">Cycle length</div>
+            <div class="mock-label" lang="uk">Цикл</div>
+            <div class="mock-input" lang="en">28 days</div>
+            <div class="mock-input" lang="uk">28 днів</div>
           </div>
         </div>
         <div class="mock-phases">
-          <div class="mock-phase" style="background:#FBEAF0;color:#D4537E">🌑 Menstrual</div>
-          <div class="mock-phase" style="background:#FAECE7;color:#E07040">🌒 Follicular</div>
-          <div class="mock-phase" style="background:#E1F5EE;color:#1D9E75">🌕 Ovulatory</div>
-          <div class="mock-phase" style="background:#EEEDFE;color:#534AB7">🌖 Luteal</div>
+          <div class="mock-phase" style="background:#FBEAF0;color:#D4537E">🌑 <span lang="en">Menstrual</span><span lang="uk">Менструація</span></div>
+          <div class="mock-phase" style="background:#FAECE7;color:#E07040">🌒 <span lang="en">Follicular</span><span lang="uk">Фолікулярна</span></div>
+          <div class="mock-phase" style="background:#E1F5EE;color:#1D9E75">🌕 <span lang="en">Ovulatory</span><span lang="uk">Овуляція</span></div>
+          <div class="mock-phase" style="background:#EEEDFE;color:#534AB7">🌖 <span lang="en">Luteal</span><span lang="uk">Лютеїнова</span></div>
         </div>
-        <div class="mock-btn">Create my calendar →</div>
+        <div class="mock-btn">
+          <span lang="en">Create my calendar →</span>
+          <span lang="uk">Створити календар →</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PHASES -->
-<section class="phases" id="phases">
-
-  <h2>Everything you need to know about your cycle</h2>
-
-  <div class="phases-grid">
-    <div class="phase-card">
-      <span class="phase-emoji">🌑</span>
-      <div class="phase-name"><span class="phase-dot" style="background:#D4537E"></span>Menstrual</div>
-      <p class="phase-desc">Day 1 of your cycle. Estrogen and progesterone drop — a natural invitation to slow down and restore.</p>
-      <ul class="phase-tips">
-        <li>Rest and warmth are restorative</li>
-        <li>Gentle yoga and slow walks</li>
-        <li>Iron-rich foods support you</li>
-      </ul>
+<!-- CALENDAR PREVIEW -->
+<section class="cal-preview" id="phases">
+  <div class="cal-preview-text">
+    <h2 lang="en">Your cycle,<br><em>in your calendar</em></h2>
+    <h2 lang="uk">Ваш цикл<br><em>у вашому календарі</em></h2>
+    <p class="cal-preview-sub" lang="en">Cycle Calendar adds colour-coded all-day events directly to Google Calendar — one for each phase, automatically calculated from your details. No app to open. Just open your calendar and your cycle is right there.</p>
+    <p class="cal-preview-sub" lang="uk">Cycle Calendar додає кольорові події у Google Calendar — по одній для кожної фази, автоматично розраховані на основі ваших даних. Не потрібно відкривати окремий застосунок. Просто відкрийте свій календар — і цикл вже там.</p>
+    <div class="cal-phase-legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#D4537E"></span><span lang="en">Menstrual</span><span lang="uk">Менструальна</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:#E07040"></span><span lang="en">Follicular</span><span lang="uk">Фолікулярна</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:#1D9E75"></span><span lang="en">Ovulatory</span><span lang="uk">Овуляторна</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:#534AB7"></span><span lang="en">Luteal</span><span lang="uk">Лютеїнова</span></div>
     </div>
-    <div class="phase-card">
-      <span class="phase-emoji">🌒</span>
-      <div class="phase-name"><span class="phase-dot" style="background:#E07040"></span>Follicular</div>
-      <p class="phase-desc">Estrogen rises and energy builds. Your most creative, optimistic phase — ideal for new beginnings.</p>
-      <ul class="phase-tips">
-        <li>Start new projects and habits</li>
-        <li>Increase workout intensity</li>
-        <li>Social plans feel effortless</li>
-      </ul>
-    </div>
-    <div class="phase-card">
-      <span class="phase-emoji">🌕</span>
-      <div class="phase-name"><span class="phase-dot" style="background:#1D9E75"></span>Ovulatory</div>
-      <p class="phase-desc">Peak estrogen, peak confidence. Your fertile window — when communication and charisma shine brightest.</p>
-      <ul class="phase-tips">
-        <li>Schedule important conversations</li>
-        <li>High-intensity workouts feel best</li>
-        <li>Anti-inflammatory foods support you</li>
-      </ul>
-    </div>
-    <div class="phase-card">
-      <span class="phase-emoji">🌖</span>
-      <div class="phase-name"><span class="phase-dot" style="background:#534AB7"></span>Luteal</div>
-      <p class="phase-desc">Progesterone rises. A time for completing, organising, and — in the final days — gentle self-care through PMS.</p>
-      <ul class="phase-tips">
-        <li>Swap HIIT for pilates or walks</li>
-        <li>Magnesium eases symptoms</li>
-        <li>Protect your energy and sleep</li>
-      </ul>
-    </div>
+  </div>
+  <div class="cal-preview-img">
+    <img src="calendar-preview.png" alt="Cycle phases shown as colour-coded events in Google Calendar" loading="lazy">
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
 <section class="how" id="how">
-
-  <h2>Three numbers.<br>One click. Done.</h2>
+  <h2 lang="en">Easy to <em>set up</em></h2>
+  <h2 lang="uk">Просто <em>налаштувати</em></h2>
 
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-title">Install the extension</div>
-      <p class="step-desc">Add Cycle Calendar to Chrome from the Web Store. It's free and takes 10 seconds.</p>
+      <div class="step-title"><span lang="en">Install the extension</span><span lang="uk">Встановіть розширення</span></div>
+      <p class="step-desc"><span lang="en">Add Cycle Calendar to Chrome from the Web Store. It's free and takes 10 seconds.</span><span lang="uk">Додайте Cycle Calendar до Chrome з Web Store. Безкоштовно, займає 10 секунд.</span></p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-title">Choose your language</div>
-      <p class="step-desc">Select English or Ukrainian. All event descriptions will be in your language.</p>
+      <div class="step-title"><span lang="en">Enter your details</span><span lang="uk">Введіть дані</span></div>
+      <p class="step-desc"><span lang="en">Last period date, period length, cycle length. That's all we need.</span><span lang="uk">Дата останньої менструації, тривалість менструації, тривалість циклу. Це все.</span></p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
-      <div class="step-title">Enter your details</div>
-      <p class="step-desc">Last period date, period length, cycle length. That's all we need.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-title">Calendar created</div>
-      <p class="step-desc">A dedicated "My Cycle" calendar appears in Google Calendar with all phases as events.</p>
+      <div class="step-title"><span lang="en">Calendar created</span><span lang="uk">Календар готовий</span></div>
+      <p class="step-desc"><span lang="en">A dedicated "My Cycle" calendar appears in Google Calendar with all phases as events.</span><span lang="uk">Окремий календар «Мій цикл» з'являється у Google Calendar з усіма фазами як подіями.</span></p>
     </div>
   </div>
 </section>
@@ -800,51 +408,70 @@
 <!-- FEATURES -->
 <section class="features" id="features">
   <div class="features-header">
-
-    <h2>Private, personal,<br>and beautifully simple</h2>
+    <h2 lang="en">Private, personal,<br>and beautifully simple</h2>
+    <h2 lang="uk">Приватно, особисто<br>та красиво просто</h2>
   </div>
 
   <div class="features-grid">
     <div class="feature-card">
-      <span class="feature-icon">📅</span>
-      <div class="feature-title">Dedicated calendar</div>
-      <p class="feature-desc">Creates a separate "My Cycle" calendar so your phases stay beautifully organised, away from work and personal events.</p>
+      <div class="feature-icon"><span class="material-symbols-outlined">calendar_month</span></div>
+      <div class="feature-title"><span lang="en">Dedicated calendar</span><span lang="uk">Окремий календар</span></div>
+      <p class="feature-desc"><span lang="en">Creates a separate "My Cycle" calendar so your phases stay beautifully organised, away from work and personal events.</span><span lang="uk">Створює окремий календар «Мій цикл», щоб фази були красиво організовані, окремо від робочих і особистих подій.</span></p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🔒</span>
-      <div class="feature-title">Completely private</div>
-      <p class="feature-desc">No servers. No accounts. No tracking. Your data lives only on your device and in your own Google Calendar.</p>
+      <div class="feature-icon"><span class="material-symbols-outlined">lock</span></div>
+      <div class="feature-title"><span lang="en">Completely private</span><span lang="uk">Повністю приватно</span></div>
+      <p class="feature-desc"><span lang="en">No servers. No accounts. No tracking. Your data lives only on your device and in your own Google Calendar.</span><span lang="uk">Жодних серверів. Жодних акаунтів. Жодного відстеження. Ваші дані — лише на вашому пристрої та у вашому Google Calendar.</span></p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🌍</span>
-      <div class="feature-title">English & Ukrainian</div>
-      <p class="feature-desc">Full support for both languages — UI, event titles, and all phase descriptions. Switch at any time.</p>
+      <div class="feature-icon"><span class="material-symbols-outlined">language</span></div>
+      <div class="feature-title"><span lang="en">English & Ukrainian</span><span lang="uk">Англійська та українська</span></div>
+      <p class="feature-desc"><span lang="en">Full support for both languages — UI, event titles, and all phase descriptions. Switch at any time.</span><span lang="uk">Повна підтримка обох мов — інтерфейс, назви подій та всі описи фаз. Перемикайте будь-коли.</span></p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">📖</span>
-      <div class="feature-title">Rich event descriptions</div>
-      <p class="feature-desc">Each event includes what's happening hormonally, how you may feel, and practical tips for nutrition, exercise, and mood.</p>
+      <div class="feature-icon"><span class="material-symbols-outlined">description</span></div>
+      <div class="feature-title"><span lang="en">Rich event descriptions</span><span lang="uk">Детальні описи подій</span></div>
+      <p class="feature-desc"><span lang="en">Each event includes what's happening hormonally, how you may feel, and practical tips for nutrition, exercise, and mood.</span><span lang="uk">Кожна подія містить опис гормональних змін, можливий стан та практичні поради щодо харчування, спорту й настрою.</span></p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🎨</span>
-      <div class="feature-title">Colour-coded phases</div>
-      <p class="feature-desc">Pink, coral, teal, and purple — each phase has its own distinct colour for instant visual recognition in your calendar.</p>
+      <div class="feature-icon"><span class="material-symbols-outlined">palette</span></div>
+      <div class="feature-title"><span lang="en">Colour-coded phases</span><span lang="uk">Кольорові фази</span></div>
+      <p class="feature-desc"><span lang="en">Pink, coral, teal, and purple — each phase has its own distinct colour for instant visual recognition in your calendar.</span><span lang="uk">Рожевий, коралевий, бірюзовий та фіолетовий — кожна фаза має свій колір для миттєвого розпізнавання.</span></p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🔄</span>
-      <div class="feature-title">Always up to date</div>
-      <p class="feature-desc">Period started? Open the extension, update the date, and regenerate. Old events are replaced automatically.</p>
+      <div class="feature-icon"><span class="material-symbols-outlined">sync</span></div>
+      <div class="feature-title"><span lang="en">Always up to date</span><span lang="uk">Завжди актуально</span></div>
+      <p class="feature-desc"><span lang="en">Period started? Open the extension, update the date, and regenerate. Old events are replaced automatically.</span><span lang="uk">Почалася менструація? Відкрийте розширення, оновіть дату та перестворіть. Старі події замінюються автоматично.</span></p>
     </div>
   </div>
+</section>
+
+<!-- CTA BLOCK -->
+<section class="cta-block" id="cta">
+  <h2 lang="en">Ready to know your rhythm?</h2>
+  <h2 lang="uk">Готові пізнати свій ритм?</h2>
+  <p lang="en">Free, private, and takes less than a minute to set up.</p>
+  <p lang="uk">Безкоштовно, приватно та займає менше хвилини.</p>
+  <a href="https://chromewebstore.google.com/detail/dobdplimbbnhbgcggafagaanajlaeeek" class="btn-cta">
+    <span class="material-symbols-outlined">add_circle</span>
+    <span lang="en">Add to Chrome — it's free</span>
+    <span lang="uk">Додати до Chrome — безкоштовно</span>
+  </a>
+  <p class="cta-note">
+    <span lang="en">No account needed · No data collected · Works with your existing Google Calendar</span>
+    <span lang="uk">Не потрібен акаунт · Дані не збираються · Працює з вашим Google Calendar</span>
+  </p>
 </section>
 
 <!-- DISCLAIMER -->
 <section class="disclaimer">
   <div class="disclaimer-inner">
-    <span class="disclaimer-icon">⚕️</span>
+    <span class="material-symbols-outlined" style="color:#9a7a20;font-size:28px;flex-shrink:0;margin-top:2px">health_and_safety</span>
     <div>
-      <h3>Not a medical tool</h3>
-      <p>Cycle Calendar is a personal wellness tool for informational purposes only. It is not a medical device and does not provide medical advice. Phase dates are estimates based on average cycle patterns — not a substitute for professional healthcare. Do not use it for medical decisions, diagnosis, or contraception. Always consult a qualified healthcare professional. Use at your own risk. <a href="terms-of-service.html" style="color:#9a7a20">Terms of Service</a> · <a href="privacy-policy.html" style="color:#9a7a20">Privacy Policy</a></p>
+      <h3 lang="en">Not a medical tool</h3>
+      <h3 lang="uk">Не медичний інструмент</h3>
+      <p lang="en">Cycle Calendar is a personal wellness tool for informational purposes only. It is not a medical device and does not provide medical advice. Phase dates are estimates based on average cycle patterns — not a substitute for professional healthcare. Do not use it for medical decisions, diagnosis, or contraception. Always consult a qualified healthcare professional. Use at your own risk. <a href="https://otomchuk.github.io/ccycle/terms-of-service.html" style="color:#9a7a20">Terms of Service</a> · <a href="https://otomchuk.github.io/ccycle/privacy-policy.html" style="color:#9a7a20">Privacy Policy</a></p>
+      <p lang="uk">Cycle Calendar — особистий інструмент для відстеження самопочуття лише з інформаційною метою. Це не медичний пристрій і не медична порада. Дати фаз є приблизними. Не використовуйте для медичних рішень, діагностики або контрацепції. Завжди консультуйтеся з лікарем. Використовуйте на власний ризик. <a href="https://otomchuk.github.io/ccycle/terms-of-service.html" style="color:#9a7a20">Умови використання</a> · <a href="https://otomchuk.github.io/ccycle/privacy-policy.html" style="color:#9a7a20">Конфіденційність</a></p>
     </div>
   </div>
 </section>
@@ -853,12 +480,25 @@
 <footer>
   <div class="footer-logo">🌙 Cycle Calendar</div>
   <ul class="footer-links">
-    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-    <li><a href="terms-of-service.html">Terms of Service</a></li>
-    <li><a href="mailto:your@email.com">Contact</a></li>
+    <li><a href="https://otomchuk.github.io/ccycle/privacy-policy.html"><span lang="en">Privacy Policy</span><span lang="uk">Політика конфіденційності</span></a></li>
+    <li><a href="https://otomchuk.github.io/ccycle/terms-of-service.html"><span lang="en">Terms of Service</span><span lang="uk">Умови використання</span></a></li>
+    <li><a href="mailto:olenka.tomchuk@gmail.com"><span lang="en">Contact</span><span lang="uk">Контакт</span></a></li>
   </ul>
-  <p class="footer-note">© 2026 Cycle Calendar. Free Chrome Extension. Not a medical product.</p>
+  <p class="footer-note">© 2026 Cycle Calendar. <span lang="en">Free Chrome Extension. Not a medical product.</span><span lang="uk">Безкоштовне розширення Chrome. Не медичний продукт.</span></p>
 </footer>
+
+<script>
+  function setLang(lang) {
+    document.body.className = lang === 'uk' ? 'uk' : '';
+    document.querySelectorAll('.lang-toggle a').forEach(a => {
+      a.classList.toggle('active', a.dataset.lang === lang);
+    });
+    localStorage.setItem('cc-lang', lang);
+  }
+  // Restore saved language
+  const saved = localStorage.getItem('cc-lang');
+  if (saved === 'uk') setLang('uk');
+</script>
 
 </body>
 </html>

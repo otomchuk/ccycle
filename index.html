@@ -202,6 +202,52 @@
     .cta-block .btn-cta .material-symbols-outlined { color: var(--plum); font-size: 22px; }
     .cta-note { margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.5); position: relative; z-index: 1; }
 
+    /* ── SUPPORT ── */
+    .support { padding: 88px 80px; background: #fff; text-align: center; }
+    .support-inner { max-width: 840px; margin: 0 auto; }
+    .support-icon {
+      width: 52px; height: 52px; margin: 0 auto 18px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; background: rgba(155,89,182,0.1); color: var(--plum);
+    }
+    .support-icon .material-symbols-outlined { font-size: 27px; }
+    .support h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 42px);
+      color: var(--heading); font-weight: 600; margin-bottom: 14px;
+    }
+    .support-copy {
+      max-width: 590px; margin: 0 auto 30px; color: #4a4060;
+      font-size: 15px; font-weight: 300; line-height: 1.7;
+    }
+    .support-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; text-align: left; }
+    .support-card {
+      display: flex; align-items: center; gap: 16px;
+      min-height: 104px; padding: 20px 22px;
+      border: 1px solid #eee3f5; border-radius: 18px;
+      background: var(--cream); color: var(--text); text-decoration: none;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .support-card:hover {
+      transform: translateY(-2px); border-color: var(--lavender);
+      box-shadow: 0 10px 30px rgba(155,89,182,0.12);
+    }
+    .support-card-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 14px; color: #fff;
+    }
+    .support-card-icon.kofi { background: transparent; border: 1px solid #ddd2e8; }
+    .support-card-icon.kofi img { display: block; width: 32px; height: auto; }
+    .support-card-icon.mono { background: transparent; }
+    .support-card-icon.mono img { display: block; width: 100%; height: 100%; }
+    .support-card-icon .material-symbols-outlined { font-size: 24px; }
+    .support-card-text { flex: 1; }
+    .support-card-title { display: block; color: var(--heading); font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .support-card-desc { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .support-card-arrow { color: var(--lavender); font-size: 20px; transition: transform 0.2s; }
+    .support-card:hover .support-card-arrow { transform: translateX(3px); }
+    body.uk .support-card.mono-card { order: -1; }
+
     /* ── DISCLAIMER ── */
     .disclaimer { padding: 60px 80px; background: #fdf5e8; border-top: 1px solid #f5d97a; border-bottom: 1px solid #f5d97a; }
     .disclaimer-inner { max-width: 720px; margin: 0 auto; display: flex; gap: 20px; align-items: flex-start; }
@@ -250,17 +296,23 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
-      .hero-content { display: flex; flex-direction: column; align-items: center; }
-      .hero-visual { justify-content: center; margin-top: 40px; }
+      .hero { gap: 28px; padding: 110px 32px 64px; }
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
-      .cal-preview, .how, .features, .disclaimer, .cta-block { padding: 72px 24px; }
+      .cal-preview, .how, .features, .support, .disclaimer, .cta-block { padding: 72px 24px; }
       .cal-preview { grid-template-columns: 1fr; gap: 32px; }
       footer { padding: 48px 24px; }
       .steps { grid-template-columns: 1fr; gap: 40px; }
       .steps::before { display: none; }
       .how h2 { white-space: normal; }
+      .support-options { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
+      .hero-content { display: flex; flex-direction: column; align-items: center; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { justify-content: center; margin-top: 40px; }
     }
   </style>
 </head>
@@ -461,6 +513,50 @@
     <span lang="en">No account needed · No data collected · Works with your existing Google Calendar</span>
     <span lang="uk">Не потрібен акаунт · Дані не збираються · Працює з вашим Google Calendar</span>
   </p>
+</section>
+
+<!-- SUPPORT -->
+<section class="support" id="support">
+  <div class="support-inner">
+    <div class="support-icon" aria-hidden="true">
+      <span class="material-symbols-outlined">volunteer_activism</span>
+    </div>
+    <h2 lang="en">Enjoying Cycle Calendar?</h2>
+    <h2 lang="uk">Подобається Cycle Calendar?</h2>
+    <p class="support-copy" lang="en">Cycle Calendar is free and independent. If it makes planning your days a little easier, you can support its continued development with any amount.</p>
+    <p class="support-copy" lang="uk">Cycle Calendar — безкоштовний та незалежний проєкт. Якщо він допомагає вам краще планувати свої дні, ви можете підтримати його розвиток будь-якою сумою.</p>
+    <div class="support-options">
+      <a class="support-card kofi-card" href="https://ko-fi.com/olenatomchuk" target="_blank" rel="noopener noreferrer">
+        <span class="support-card-icon kofi" aria-hidden="true">
+          <img src="kofi-symbol.svg" alt="">
+        </span>
+        <span class="support-card-text">
+          <span class="support-card-title">Ko-fi</span>
+          <span class="support-card-desc">
+            <span lang="en">Support from anywhere in the world</span>
+            <span lang="uk">Підтримати з будь-якої країни</span>
+          </span>
+        </span>
+        <span class="material-symbols-outlined support-card-arrow" aria-hidden="true">arrow_forward</span>
+      </a>
+      <a class="support-card mono-card" href="https://send.monobank.ua/jar/3DsV5BqgJM" target="_blank" rel="noopener noreferrer">
+        <span class="support-card-icon mono" aria-hidden="true">
+          <img src="monobank.svg" alt="">
+        </span>
+        <span class="support-card-text">
+          <span class="support-card-title">
+            <span lang="en">monobank Jar</span>
+            <span lang="uk">Банка monobank</span>
+          </span>
+          <span class="support-card-desc">
+            <span lang="en">A convenient option for Ukrainian supporters</span>
+            <span lang="uk">Зручний спосіб підтримати в Україні</span>
+          </span>
+        </span>
+        <span class="material-symbols-outlined support-card-arrow" aria-hidden="true">arrow_forward</span>
+      </a>
+    </div>
+  </div>
 </section>
 
 <!-- DISCLAIMER -->
